@@ -8,7 +8,7 @@ import com.quannv.searchapplication.databinding.ItemImageBinding
 import com.quannv.searchapplication.response.Photo
 import com.quannv.searchapplication.util.Const
 
-class ImageAdapter(private val data: MutableList<Photo>): Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(private val data: MutableList<Photo>, private val onItemClick: () -> Unit): Adapter<ImageAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemImageBinding.inflate(
@@ -25,6 +25,9 @@ class ImageAdapter(private val data: MutableList<Photo>): Adapter<ImageAdapter.V
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (position in 0 until data.size) {
             holder.bindData(data[position])
+            holder.itemView.setOnClickListener {
+                onItemClick.invoke()
+            }
         }
     }
 

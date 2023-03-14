@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.quannv.searchapplication.base.BaseFragment
 import com.quannv.searchapplication.databinding.FragmentDetailBinding
 import com.quannv.searchapplication.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ImageDetailFragment: BaseFragment<MainViewModel>() {
+class ImageDetailFragment: Fragment() {
 
-    companion object {
-        fun newInstance() = ImageDetailFragment()
-    }
+    val viewModel: MainViewModel by activityViewModels()
 
     private var binding: FragmentDetailBinding? = null
     private var adapter: ImageDetailAdapter = ImageDetailAdapter(mutableListOf())

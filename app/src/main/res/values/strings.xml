@@ -2,4 +2,6 @@
     <string name="app_name">SearchApplication</string>
     <string name="hint_key_search">Input key search</string>
     <string name="content_description_button_delete">Button Delete</string>
+    <string name="header_main_fragment">Search Image</string>
+    <string name="header_detail_fragment">Detail Image</string>
 </resources>

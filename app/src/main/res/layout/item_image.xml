@@ -19,6 +19,7 @@
             android:id="@+id/image"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scaleType="centerCrop"
             app:imageUrl="@{item.src.medium}"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintDimensionRatio="1:1"

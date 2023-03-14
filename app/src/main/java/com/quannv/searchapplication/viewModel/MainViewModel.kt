@@ -7,17 +7,21 @@ import com.quannv.searchapplication.event.SingleLiveEvent
 import com.quannv.searchapplication.repository.SearchRepository
 import com.quannv.searchapplication.response.SearchResponse
 import com.quannv.searchapplication.util.Const
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : BaseViewModel() {
 
     val searchResult = MutableLiveData<SearchResponse>()
     val isShowLoading = SingleLiveEvent<Boolean>()
-    var currentKeySearch: String = ""
+    private var searchJob: Job? = null
+    private var currentKeySearch: String = ""
 
     init {
         disposables.addAll(
@@ -29,7 +33,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun search(keySearch: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch(Dispatchers.IO) {
             repository.search(keySearch, 1, Const.PER_PAGE)
             currentKeySearch = keySearch
         }
