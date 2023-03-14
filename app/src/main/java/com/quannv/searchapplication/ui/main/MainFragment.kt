@@ -6,14 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.quannv.searchapplication.base.BaseFragment
 import com.quannv.searchapplication.databinding.FragmentMainBinding
 import com.quannv.searchapplication.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<MainViewModel>() {
@@ -40,7 +36,6 @@ class MainFragment : BaseFragment<MainViewModel>() {
         binding?.list?.adapter = adapter
         handleInputSearch()
         handleViewModel()
-        handleLoadMore()
     }
 
     private fun handleViewModel() {
@@ -66,16 +61,5 @@ class MainFragment : BaseFragment<MainViewModel>() {
                 }
             }
         }
-    }
-
-    private fun handleLoadMore() {
-        binding?.list?.addOnScrollListener(object: OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1) && adapter.canLoadMore()) {
-                    viewModel.nextPage(binding?.inputKeySearch?.text?.toString() ?: "", currentPage + 1)
-                }
-            }
-        })
     }
 }

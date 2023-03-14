@@ -1,6 +1,5 @@
 package com.quannv.searchapplication.viewModel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.quannv.searchapplication.base.BaseViewModel
@@ -16,14 +15,14 @@ class MainViewModel @Inject constructor(
     private val repository: SearchRepository
 ) : BaseViewModel() {
 
-    private val _searchResult = SingleLiveEvent<SearchResponse>()
-    val searchResult: LiveData<SearchResponse> = _searchResult
+    val searchResult = MutableLiveData<SearchResponse>()
     val isShowLoading = SingleLiveEvent<Boolean>()
+    var currentKeySearch: String = ""
 
     init {
         disposables.addAll(
             repository.searchResults.subscribe {
-                _searchResult.postValue(it)
+                searchResult.postValue(it)
                 isShowLoading.postValue(false)
             }
         )
@@ -32,15 +31,16 @@ class MainViewModel @Inject constructor(
     fun search(keySearch: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.search(keySearch, 1, Const.PER_PAGE)
+            currentKeySearch = keySearch
         }
     }
 
-    fun nextPage(currentKey: String, nextPage: Long) {
+    fun nextPage(nextPage: Long) {
         if (isShowLoading.value == true) return
         isShowLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.search(currentKey, nextPage, Const.PER_PAGE)
+                repository.search(currentKeySearch, nextPage, Const.PER_PAGE)
             } catch (e: Exception) {
                 isShowLoading.postValue(false)
             }
