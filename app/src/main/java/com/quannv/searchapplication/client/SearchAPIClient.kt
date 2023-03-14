@@ -12,7 +12,7 @@ interface SearchAPIClient {
     fun search(
         @Header("Authorization") header: String,
         @Query("query") query: String,
-        @Query("page") page: Int,
+        @Query("page") page: Long,
         @Query("per_page") perPage: Int,
         @Query("orientation") orientation: String? = null,
         @Query("size") size: String? = null,
