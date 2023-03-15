@@ -6,7 +6,7 @@ import com.quannv.searchapplication.base.BaseViewModel
 import com.quannv.searchapplication.event.SingleLiveEvent
 import com.quannv.searchapplication.repository.SearchRepository
 import com.quannv.searchapplication.response.SearchResponse
-import com.quannv.searchapplication.util.Const
+import com.quannv.searchapplication.util.AppConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,7 +35,7 @@ class MainViewModel @Inject constructor(
     fun search(keySearch: String) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch(Dispatchers.IO) {
-            repository.search(keySearch, 1, Const.PER_PAGE)
+            repository.search(keySearch, 1, AppConfig.PER_PAGE)
             currentKeySearch = keySearch
         }
     }
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor(
         isShowLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.search(currentKeySearch, nextPage, Const.PER_PAGE)
+                repository.search(currentKeySearch, nextPage, AppConfig.PER_PAGE)
             } catch (e: Exception) {
                 isShowLoading.postValue(false)
             }

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.quannv.searchapplication.databinding.ItemImageBinding
 import com.quannv.searchapplication.response.Photo
-import com.quannv.searchapplication.util.Const
 
 class ImageAdapter(private val data: MutableList<Photo>, private val onItemClick: () -> Unit): Adapter<ImageAdapter.ViewHolder>() {
 
@@ -42,8 +41,6 @@ class ImageAdapter(private val data: MutableList<Photo>, private val onItemClick
         data.addAll(list)
         notifyItemRangeInserted(positionStart, list.size)
     }
-
-    fun canLoadMore(): Boolean = data.size % Const.PER_PAGE == 0
 
     class ViewHolder(private val binding: ItemImageBinding): RecyclerView.ViewHolder(binding.root) {
 

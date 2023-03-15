@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.quannv.searchapplication.client.SearchAPIClient
 import com.quannv.searchapplication.response.SearchResponse
+import com.quannv.searchapplication.util.AppConfig
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ class SearchRepository @Inject constructor(
     suspend fun search(keySearch: String, page: Long, perPage: Int) {
         withContext(Dispatchers.IO) {
             val result = api.search(
-                header = "Iuv7rLajnL5ru8sSoN8ztI2bCadewP2E0b7XQa9vIde0L2aT7vDnPip2",
+                header = AppConfig.TOKEN,
                 query = keySearch,
                 page = page,
                 perPage = perPage

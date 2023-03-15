@@ -2,6 +2,7 @@ package com.quannv.searchapplication.module
 
 import com.quannv.searchapplication.client.SearchAPIClient
 import com.quannv.searchapplication.network.interceptor.ConnectivityInterceptor
+import com.quannv.searchapplication.util.AppConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.pexels.com/v1/")
+            .baseUrl(AppConfig.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
